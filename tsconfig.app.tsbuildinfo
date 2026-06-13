@@ -1,0 +1,1 @@
+{"root":["./src/app.test.tsx","./src/app.tsx","./src/index.tsx","./src/setuptests.ts","./src/vite-env.d.ts","./src/components/avatar.tsx","./src/components/bridge.tsx","./src/components/island.tsx","./src/components/ocean.tsx","./src/components/overlay.tsx","./src/components/scene.tsx","./src/data/islands.ts","./src/hooks/useavatar.ts"],"version":"6.0.3"}

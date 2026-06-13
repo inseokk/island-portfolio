@@ -1,0 +1,93 @@
+import { Fragment } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stars } from "@react-three/drei";
+import * as THREE from "three";
+import { Island } from "./Island";
+import { Avatar } from "./Avatar";
+import { Bridge } from "./Bridge";
+import { Ocean } from "./Ocean";
+import { MAIN_ISLAND, SECTION_ISLANDS, AnimState, IslandId } from "../data/islands";
+
+interface SceneProps {
+  avatarRef: React.RefObject<THREE.Group | null>;
+  animState: AnimState;
+  activeIsland: IslandId;
+  onIslandClick: (id: IslandId) => void;
+}
+
+/**
+ * Scene
+ * The root Three.js canvas. Sets up:
+ *   - Isometric-style camera (orthographic-feel via high FOV + far distance)
+ *   - Lighting rig (ambient + warm directional sun)
+ *   - All world geometry (ocean, islands, bridges, avatar)
+ */
+export function Scene({
+  avatarRef,
+  animState,
+  activeIsland,
+  onIslandClick,
+}: SceneProps) {
+  return (
+    <Canvas
+      shadows
+      camera={{
+        position: [12, 14, 12],
+        fov: 38,
+        near: 0.1,
+        far: 200,
+      }}
+      style={{ background: "#a8d8ea" }}
+    >
+      <Stars radius={80} depth={30} count={800} factor={2} fade />
+
+      <ambientLight intensity={0.55} color="#fff8e7" />
+      <directionalLight
+        position={[8, 12, 6]}
+        intensity={1.2}
+        color="#fff3c4"
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+      />
+      <directionalLight
+        position={[-6, 4, -8]}
+        intensity={0.3}
+        color="#c8e8ff"
+      />
+
+      <Ocean />
+
+      <Island
+        key={MAIN_ISLAND.id}
+        {...MAIN_ISLAND}
+        label="Inseo's World"
+        emoji="🏠"
+        isActive={activeIsland === MAIN_ISLAND.id}
+        onSelect={onIslandClick}
+      />
+
+      {SECTION_ISLANDS.map((island) => (
+        <Fragment key={island.id}>
+          <Island
+            {...island}
+            isActive={activeIsland === island.id}
+            onSelect={onIslandClick}
+          />
+          <Bridge from={MAIN_ISLAND.position} to={island.position} />
+        </Fragment>
+      ))}
+
+      <Avatar avatarRef={avatarRef} animState={animState} />
+
+      <OrbitControls
+        enablePan={false}
+        enableZoom={true}
+        minDistance={8}
+        maxDistance={28}
+        maxPolarAngle={Math.PI / 2.4}
+        minPolarAngle={Math.PI / 6}
+        target={[0, 0, -2]}
+      />
+    </Canvas>
+  );
+}
