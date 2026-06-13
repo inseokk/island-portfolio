@@ -19,7 +19,7 @@ export function useAvatar() {
   const [activeIsland, setActiveIsland] = useState<IslandId>("home");
 
   const walkTo = useCallback(
-    (islandId: IslandId) => {
+    (islandId: IslandId, onComplete?: () => void) => {
       if (!avatarRef.current) return;
       if (activeIsland === islandId) return;
 
@@ -45,6 +45,7 @@ export function useAvatar() {
         duration,
         ease: "power1.inOut",
         onComplete: () => {
+          onComplete?.();
           setAnimState("celebrating");
           setTimeout(() => setAnimState("idle"), 800);
         },
