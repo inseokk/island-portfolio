@@ -26,7 +26,7 @@ export interface SectionIslandConfig {
 export const MAIN_ISLAND: MainIslandConfig = {
   id: "home",
   position: [0, 0, 0],
-  color: "#5a9e6f",
+  color: "#9FB054",
   size: 2.2,
 };
 
@@ -36,7 +36,7 @@ export const SECTION_ISLANDS: SectionIslandConfig[] = [
     label: "About",
     emoji: "🌴",
     position: [-5, 0, -4],
-    color: "#4a8c5c",
+    color: "#5F873E",
     size: 1.4,
     bridgeFrom: [0, 0, 0],
   },
@@ -45,7 +45,7 @@ export const SECTION_ISLANDS: SectionIslandConfig[] = [
     label: "SWE Projects",
     emoji: "💻",
     position: [5, 0, -3],
-    color: "#3d7a52",
+    color: "#5F873E",
     size: 1.4,
     bridgeFrom: [0, 0, 0],
   },
@@ -54,7 +54,7 @@ export const SECTION_ISLANDS: SectionIslandConfig[] = [
     label: "PM / UX Projects",
     emoji: "🎨",
     position: [0, 0, -8],
-    color: "#4a8c5c",
+    color: "#5F873E",
     size: 1.4,
     bridgeFrom: [0, 0, 0],
   },

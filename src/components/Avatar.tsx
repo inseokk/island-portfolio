@@ -40,13 +40,13 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
       <group ref={bodyRef}>
         <mesh position={[0, 0.3, 0]} castShadow>
           <capsuleGeometry args={[0.15, 0.3, 4, 8]} />
-          <meshStandardMaterial color="#e8855a" flatShading />
+          <meshStandardMaterial color="#AD82BA" flatShading />
         </mesh>
 
         <group ref={headRef}>
           <mesh position={[0, 0.72, 0]} castShadow>
             <sphereGeometry args={[0.16, 6, 5]} />
-            <meshStandardMaterial color="#f5c5a3" flatShading />
+            <meshStandardMaterial color="#FDFBEC" flatShading />
           </mesh>
 
           <mesh position={[-0.06, 0.74, 0.13]}>
@@ -59,24 +59,24 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
           </mesh>
         </group>
 
-        <mesh position={[-0.22, 0.32, 0]} rotation={[0, 0, 0.4]} castShadow>
+        <mesh position={[-0.22, 0.32, 0]} rotation={[0, 0, -0.4]} castShadow>
           <capsuleGeometry args={[0.06, 0.22, 4, 6]} />
-          <meshStandardMaterial color="#e8855a" flatShading />
+          <meshStandardMaterial color="#AD82BA" flatShading />
         </mesh>
 
-        <mesh position={[0.22, 0.32, 0]} rotation={[0, 0, -0.4]} castShadow>
+        <mesh position={[0.22, 0.32, 0]} rotation={[0, 0, 0.4]} castShadow>
           <capsuleGeometry args={[0.06, 0.22, 4, 6]} />
-          <meshStandardMaterial color="#e8855a" flatShading />
+          <meshStandardMaterial color="#AD82BA" flatShading />
         </mesh>
 
         <mesh position={[-0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
-          <meshStandardMaterial color="#5a7ec8" flatShading />
+          <meshStandardMaterial color="#FEDA71" flatShading />
         </mesh>
 
         <mesh position={[0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
-          <meshStandardMaterial color="#5a7ec8" flatShading />
+          <meshStandardMaterial color="#FEDA71" flatShading />
         </mesh>
       </group>
     </group>

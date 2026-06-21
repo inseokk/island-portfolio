@@ -29,7 +29,7 @@ export default function HomePage() {
 
   return (
     <div className="app">
-      <div className="hint">Click an island to explore ✨</div>
+      <div className="hint text-small">Click an island to explore!</div>
 
       <Scene
         avatarRef={avatarRef}

@@ -1,6 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+import { OrbitControls, Sky, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { Island } from "./Island";
 import { Avatar } from "./Avatar";
@@ -37,8 +37,16 @@ export function Scene({
         near: 0.1,
         far: 200,
       }}
-      style={{ background: "#a8d8ea" }}
+      style={{ background: "var(--color-sky-blue)" }}
     >
+      <Sky
+        distance={450000}
+        sunPosition={[8, 12, 6]}
+        turbidity={8}
+        rayleigh={0.2}
+        mieCoefficient={0.003}
+        mieDirectionalG={0.7}
+      />
       <Stars radius={80} depth={30} count={800} factor={2} fade />
 
       <ambientLight intensity={0.55} color="#fff8e7" />
@@ -55,7 +63,9 @@ export function Scene({
         color="#c8e8ff"
       />
 
-      <Ocean />
+      <Suspense fallback={null}>
+        <Ocean />
+      </Suspense>
 
       <Island
         key={MAIN_ISLAND.id}

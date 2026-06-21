@@ -61,13 +61,13 @@ export function Island({
     >
       <mesh position={[0, -0.18, 0]} receiveShadow castShadow>
         <cylinderGeometry args={[size * 0.95, size, 0.35, 7]} />
-        <meshStandardMaterial color="#7a5c3a" flatShading />
+        <meshStandardMaterial color="#CC943D" flatShading />
       </mesh>
 
       <mesh position={[0, 0, 0]} receiveShadow castShadow>
         <cylinderGeometry args={[size, size * 0.95, 0.22, 7]} />
         <meshStandardMaterial
-          color={hovered || isActive ? "#7ecf8e" : color}
+          color={hovered || isActive ? "#9FB054" : "#5F873E"}
           flatShading
         />
       </mesh>

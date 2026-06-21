@@ -11,34 +11,15 @@
   margin: 0 auto;
 }
 
+/* margin only — visual styles come from .btn .btn-light */
 .section-back {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: var(--size-small);
-  color: var(--color-island-dark);
-  text-decoration: none;
   margin-bottom: 2rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  transition: background 0.15s, color 0.15s;
-}
-
-.section-back:hover {
-  background: color-mix(in srgb, var(--color-island-dark) 12%, transparent);
 }
 
 .section-page h1 {
-  font-family: var(--font-heading);
-  font-size: var(--size-h1);
-  font-weight: 400;
   margin: 0 0 1.2rem;
-  color: var(--color-text);
 }
 
 .section-page p {
-  font-family: var(--font-body);
-  font-size: var(--size-body);
-  line-height: 1.7;
-  color: var(--color-text);
   margin: 0;
 }

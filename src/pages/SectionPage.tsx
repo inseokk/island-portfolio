@@ -13,11 +13,11 @@ export function SectionPage({ sectionId }: SectionPageProps) {
   return (
     <div className="section-page">
       <div className="section-page-inner">
-        <Link to="/" className="section-back">
+        <Link to="/" className="section-back btn btn-light">
           ← Back to map
         </Link>
-        <h1>{content.title}</h1>
-        <p>{content.body}</p>
+        <h1 className="text-h1">{content.title}</h1>
+        <p className="text-body">{content.body}</p>
       </div>
     </div>
   );
