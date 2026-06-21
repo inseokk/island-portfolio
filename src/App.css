@@ -1,9 +1,3 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 html, body, #root {
   width: 100%;
   height: 100%;
@@ -22,13 +16,13 @@ html, body, #root {
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(253, 251, 236, 0.82); /* --color-bg */
   backdrop-filter: blur(8px);
   padding: 0.45rem 1.1rem;
   border-radius: 999px;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  font-size: 0.9rem;
-  color: #444;
+  font-family: var(--font-body);
+  font-size: var(--size-small);
+  color: var(--color-text);
   pointer-events: none;
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }

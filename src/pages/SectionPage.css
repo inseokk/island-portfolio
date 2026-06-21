@@ -1,6 +1,7 @@
 .section-page {
   min-height: 100vh;
-  background: #fffdf7;
+  background: var(--color-bg);
+  color: var(--color-text);
   padding: 3rem 2rem;
   overflow-y: auto;
 }
@@ -12,9 +13,9 @@
 
 .section-back {
   display: inline-block;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  font-size: 0.95rem;
-  color: #4a8c5c;
+  font-family: var(--font-body);
+  font-size: var(--size-small);
+  color: var(--color-island-dark);
   text-decoration: none;
   margin-bottom: 2rem;
   padding: 0.4rem 0.8rem;
@@ -23,21 +24,21 @@
 }
 
 .section-back:hover {
-  background: rgba(74, 140, 92, 0.1);
-  color: #3d7a52;
+  background: color-mix(in srgb, var(--color-island-dark) 12%, transparent);
 }
 
 .section-page h1 {
-  font-family: "Segoe UI", system-ui, sans-serif;
-  font-size: 2rem;
+  font-family: var(--font-heading);
+  font-size: var(--size-h1);
+  font-weight: 400;
   margin: 0 0 1.2rem;
-  color: #2a2a2a;
+  color: var(--color-text);
 }
 
 .section-page p {
-  font-family: "Segoe UI", system-ui, sans-serif;
-  font-size: 1.05rem;
+  font-family: var(--font-body);
+  font-size: var(--size-body);
   line-height: 1.7;
-  color: #555;
+  color: var(--color-text);
   margin: 0;
 }
