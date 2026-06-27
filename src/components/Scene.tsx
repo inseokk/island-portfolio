@@ -6,7 +6,7 @@ import { Island } from "./Island";
 import { Avatar } from "./Avatar";
 import { Bridge } from "./Bridge";
 import { Ocean } from "./Ocean";
-import { MAIN_ISLAND, SECTION_ISLANDS, AnimState, IslandId } from "../data/islands";
+import { MAIN_ISLAND, SECTION_ISLANDS, AnimState, IslandId, Vec3 } from "../data/islands";
 
 interface SceneProps {
   avatarRef: React.RefObject<THREE.Group | null>;
@@ -76,16 +76,31 @@ export function Scene({
         onSelect={onIslandClick}
       />
 
-      {SECTION_ISLANDS.map((island) => (
-        <Fragment key={island.id}>
-          <Island
-            {...island}
-            isActive={activeIsland === island.id}
-            onSelect={onIslandClick}
-          />
-          <Bridge from={MAIN_ISLAND.position} to={island.position} />
-        </Fragment>
-      ))}
+      {SECTION_ISLANDS.map((island) => {
+        const mainPos = new THREE.Vector3(...MAIN_ISLAND.position);
+        const islandPos = new THREE.Vector3(...island.position);
+        const dir = new THREE.Vector3().subVectors(islandPos, mainPos).normalize();
+        const bridgeFrom: Vec3 = [
+          mainPos.x + dir.x * (MAIN_ISLAND.size - 0.2),
+          0,
+          mainPos.z + dir.z * (MAIN_ISLAND.size - 0.2),
+        ];
+        const bridgeTo: Vec3 = [
+          islandPos.x - dir.x * (island.size - 0.2),
+          0,
+          islandPos.z - dir.z * (island.size - 0.2),
+        ];
+        return (
+          <Fragment key={island.id}>
+            <Island
+              {...island}
+              isActive={activeIsland === island.id}
+              onSelect={onIslandClick}
+            />
+            <Bridge from={bridgeFrom} to={bridgeTo} />
+          </Fragment>
+        );
+      })}
 
       <Avatar avatarRef={avatarRef} animState={animState} />
 

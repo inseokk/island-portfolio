@@ -11,6 +11,10 @@
   margin: 0 auto;
 }
 
+.section-page-inner--wide {
+  max-width: 960px;
+}
+
 /* margin only — visual styles come from .btn .btn-light */
 .section-back {
   margin-bottom: 2rem;
