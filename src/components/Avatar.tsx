@@ -38,17 +38,19 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
   return (
     <group ref={avatarRef} position={AVATAR_START}>
       <group ref={bodyRef}>
-        <mesh position={[0, 0.3, 0]} castShadow>
-          <capsuleGeometry args={[0.15, 0.3, 4, 8]} />
+        {/* Body */}
+        <mesh position={[0, 0.35, 0]} castShadow>
+          <capsuleGeometry args={[0.15, 0.2, 4, 8]} />
           <meshStandardMaterial color="#AD82BA" flatShading />
         </mesh>
 
         <group ref={headRef}>
+          {/* Head */}
           <mesh position={[0, 0.72, 0]} castShadow>
             <sphereGeometry args={[0.16, 6, 5]} />
             <meshStandardMaterial color="#FDFBEC" flatShading />
           </mesh>
-
+          {/* Eyes */}
           <mesh position={[-0.06, 0.74, 0.13]}>
             <sphereGeometry args={[0.025, 4, 4]} />
             <meshStandardMaterial color="#222" />
@@ -57,26 +59,31 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
             <sphereGeometry args={[0.025, 4, 4]} />
             <meshStandardMaterial color="#222" />
           </mesh>
+          {/* Smile */}
+          <mesh position={[0, 0.686, 0.135]} rotation={[0, 0, Math.PI]}>
+            <torusGeometry args={[0.035, 0.009, 4, 8, Math.PI]} />
+            <meshStandardMaterial color="#222" />
+          </mesh>
         </group>
-
-        <mesh position={[-0.22, 0.32, 0]} rotation={[0, 0, -0.4]} castShadow>
-          <capsuleGeometry args={[0.06, 0.22, 4, 6]} />
-          <meshStandardMaterial color="#AD82BA" flatShading />
+        {/* Arms */}
+        <mesh position={[-0.22, 0.36, 0]} rotation={[0, 0, -0.4]} castShadow>
+          <capsuleGeometry args={[0.06, 0.2, 4, 6]} />
+          <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
 
-        <mesh position={[0.22, 0.32, 0]} rotation={[0, 0, 0.4]} castShadow>
-          <capsuleGeometry args={[0.06, 0.22, 4, 6]} />
-          <meshStandardMaterial color="#AD82BA" flatShading />
+        <mesh position={[0.22, 0.36, 0]} rotation={[0, 0, 0.4]} castShadow>
+          <capsuleGeometry args={[0.06, 0.2, 4, 6]} />
+          <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
-
+        {/* Legs */}
         <mesh position={[-0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
-          <meshStandardMaterial color="#FEDA71" flatShading />
+          <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
 
         <mesh position={[0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
-          <meshStandardMaterial color="#FEDA71" flatShading />
+          <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
       </group>
     </group>

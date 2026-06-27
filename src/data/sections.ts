@@ -7,8 +7,8 @@ export interface SectionContent {
 
 export const SECTION_CONTENT: Record<SectionId, SectionContent> = {
   about: {
-    title: "About Me 🌴",
-    body: "Hey! I'm Inseo — a CMU student interested in AR/VR, HCI, and building things that live at the intersection of design and engineering. Fill this in with your story!",
+    title: "About Me 🥥",
+    body: "Hey! I'm Inseo, a CMU student interested in PM, AR/VR, HCI, and building things that live at the intersection of design and engineering.",
   },
   swe: {
     title: "SWE Projects 💻",
