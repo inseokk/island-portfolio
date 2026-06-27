@@ -59,9 +59,18 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
             <sphereGeometry args={[0.025, 4, 4]} />
             <meshStandardMaterial color="#222" />
           </mesh>
+          {/* Eye highlights */}
+          <mesh position={[-0.05, 0.75, 0.15]}>
+            <sphereGeometry args={[0.009, 4, 4]} />
+            <meshStandardMaterial color="#fff" />
+          </mesh>
+          <mesh position={[0.07, 0.75, 0.15]}>
+            <sphereGeometry args={[0.009, 4, 4]} />
+            <meshStandardMaterial color="#fff" />
+          </mesh>
           {/* Smile */}
           <mesh position={[0, 0.686, 0.135]} rotation={[0, 0, Math.PI]}>
-            <torusGeometry args={[0.035, 0.009, 4, 8, Math.PI]} />
+            <torusGeometry args={[0.025, 0.009, 4, 8, Math.PI]} />
             <meshStandardMaterial color="#222" />
           </mesh>
         </group>
@@ -70,7 +79,6 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
           <capsuleGeometry args={[0.06, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
-
         <mesh position={[0.22, 0.36, 0]} rotation={[0, 0, 0.4]} castShadow>
           <capsuleGeometry args={[0.06, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
@@ -80,7 +88,6 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
-
         <mesh position={[0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />

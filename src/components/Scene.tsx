@@ -108,7 +108,7 @@ export function Scene({
         enablePan={false}
         enableZoom={true}
         minDistance={8}
-        maxDistance={28}
+        maxDistance={15}
         maxPolarAngle={Math.PI / 2.4}
         minPolarAngle={Math.PI / 6}
         target={[0, 0, -2]}
