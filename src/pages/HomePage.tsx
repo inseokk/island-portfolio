@@ -14,7 +14,7 @@ function isSectionId(id: IslandId): id is SectionId {
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { avatarRef, animState, activeIsland, walkTo } = useAvatar();
+  const { avatarRef, animState, setAnimState, activeIsland, walkTo, keysRef } = useAvatar();
 
   const handleIslandClick = useCallback(
     (id: IslandId) => {
@@ -29,13 +29,15 @@ export default function HomePage() {
 
   return (
     <div className="app">
-      <div className="hint text-small">Click an island to explore!</div>
+      <div className="hint text-small">Click an island or use WASD / arrow keys to move!</div>
 
       <Scene
         avatarRef={avatarRef}
         animState={animState}
         activeIsland={activeIsland}
         onIslandClick={handleIslandClick}
+        keysRef={keysRef}
+        onSetAnimState={setAnimState}
       />
     </div>
   );

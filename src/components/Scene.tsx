@@ -1,32 +1,96 @@
-import { Fragment, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Fragment, Suspense, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Sky, Stars } from "@react-three/drei";
 import * as THREE from "three";
+import { gsap } from "gsap";
 import { Island } from "./Island";
 import { Avatar } from "./Avatar";
 import { Bridge } from "./Bridge";
 import { Ocean } from "./Ocean";
 import { MAIN_ISLAND, SECTION_ISLANDS, AnimState, IslandId, Vec3 } from "../data/islands";
 
+const MOVE_SPEED = 3.5;
+const X_MIN = -7, X_MAX = 7, Z_MIN = -9.5, Z_MAX = 3;
+
+interface KeyboardControllerProps {
+  avatarRef: React.RefObject<THREE.Group | null>;
+  keysRef: React.RefObject<Set<string>>;
+  onAnimStateChange: (state: AnimState) => void;
+}
+
+function KeyboardController({ avatarRef, keysRef, onAnimStateChange }: KeyboardControllerProps) {
+  const { camera } = useThree();
+  const prevAnimState = useRef<AnimState>("idle");
+
+  useFrame((_, delta) => {
+    if (!avatarRef.current) return;
+
+    const keys = keysRef.current;
+
+    if (keys.size === 0) {
+      if (prevAnimState.current !== "idle") {
+        prevAnimState.current = "idle";
+        onAnimStateChange("idle");
+      }
+      return;
+    }
+
+    // Keyboard movement takes priority — cancel any active GSAP position tween
+    gsap.killTweensOf(avatarRef.current.position);
+
+    // Camera-relative XZ directions
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+    forward.y = 0;
+    if (forward.length() < 0.001) return;
+    forward.normalize();
+
+    const right = new THREE.Vector3()
+      .crossVectors(forward, new THREE.Vector3(0, 1, 0))
+      .normalize();
+
+    const vel = new THREE.Vector3();
+    if (keys.has("w") || keys.has("arrowup")) vel.add(forward);
+    if (keys.has("s") || keys.has("arrowdown")) vel.sub(forward);
+    if (keys.has("d") || keys.has("arrowright")) vel.add(right);
+    if (keys.has("a") || keys.has("arrowleft")) vel.sub(right);
+
+    if (vel.length() < 0.001) return;
+
+    vel.normalize().multiplyScalar(MOVE_SPEED * delta);
+
+    const pos = avatarRef.current.position;
+    pos.x = Math.max(X_MIN, Math.min(X_MAX, pos.x + vel.x));
+    pos.z = Math.max(Z_MIN, Math.min(Z_MAX, pos.z + vel.z));
+
+    // Face movement direction
+    avatarRef.current.rotation.y = Math.atan2(vel.x, vel.z);
+
+    if (prevAnimState.current !== "running") {
+      prevAnimState.current = "running";
+      onAnimStateChange("running");
+    }
+  });
+
+  return null;
+}
+
 interface SceneProps {
   avatarRef: React.RefObject<THREE.Group | null>;
   animState: AnimState;
   activeIsland: IslandId;
   onIslandClick: (id: IslandId) => void;
+  keysRef: React.RefObject<Set<string>>;
+  onSetAnimState: (state: AnimState) => void;
 }
 
-/**
- * Scene
- * The root Three.js canvas. Sets up:
- *   - Isometric-style camera (orthographic-feel via high FOV + far distance)
- *   - Lighting rig (ambient + warm directional sun)
- *   - All world geometry (ocean, islands, bridges, avatar)
- */
 export function Scene({
   avatarRef,
   animState,
   activeIsland,
   onIslandClick,
+  keysRef,
+  onSetAnimState,
 }: SceneProps) {
   return (
     <Canvas
@@ -103,6 +167,12 @@ export function Scene({
       })}
 
       <Avatar avatarRef={avatarRef} animState={animState} />
+
+      <KeyboardController
+        avatarRef={avatarRef}
+        keysRef={keysRef}
+        onAnimStateChange={onSetAnimState}
+      />
 
       <OrbitControls
         enablePan={false}

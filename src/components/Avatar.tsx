@@ -8,30 +8,45 @@ interface AvatarProps {
   animState: AnimState;
 }
 
-/**
- * Avatar
- * Placeholder low-poly avatar (a little capsule + sphere "person").
- * Replace the geometry here with a loaded GLTF from Mixamo later.
- */
 export function Avatar({ avatarRef, animState }: AvatarProps) {
   const bodyRef = useRef<THREE.Group>(null);
   const headRef = useRef<THREE.Group>(null);
+  const leftArmRef = useRef<THREE.Mesh>(null);
+  const rightArmRef = useRef<THREE.Mesh>(null);
+  const leftLegRef = useRef<THREE.Mesh>(null);
+  const rightLegRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
-
     if (!bodyRef.current || !headRef.current) return;
 
     if (animState === "running") {
+      const swing = Math.sin(t * 9);
       bodyRef.current.position.y = Math.abs(Math.sin(t * 10)) * 0.08;
       bodyRef.current.rotation.x = 0.15;
+      headRef.current.rotation.y = 0;
+
+      if (leftArmRef.current) leftArmRef.current.rotation.x = swing * 0.6;
+      if (rightArmRef.current) rightArmRef.current.rotation.x = -swing * 0.6;
+      if (leftLegRef.current) leftLegRef.current.rotation.x = -swing * 0.6;
+      if (rightLegRef.current) rightLegRef.current.rotation.x = swing * 0.6;
     } else if (animState === "celebrating") {
       bodyRef.current.position.y = Math.abs(Math.sin(t * 14)) * 0.2;
       bodyRef.current.rotation.x = 0;
+
+      if (leftArmRef.current) leftArmRef.current.rotation.x = 0;
+      if (rightArmRef.current) rightArmRef.current.rotation.x = 0;
+      if (leftLegRef.current) leftLegRef.current.rotation.x = 0;
+      if (rightLegRef.current) rightLegRef.current.rotation.x = 0;
     } else {
       bodyRef.current.position.y = Math.sin(t * 1.5) * 0.02;
       bodyRef.current.rotation.x = 0;
       headRef.current.rotation.y = Math.sin(t * 0.7) * 0.15;
+
+      if (leftArmRef.current) leftArmRef.current.rotation.x = 0;
+      if (rightArmRef.current) rightArmRef.current.rotation.x = 0;
+      if (leftLegRef.current) leftLegRef.current.rotation.x = 0;
+      if (rightLegRef.current) rightLegRef.current.rotation.x = 0;
     }
   });
 
@@ -74,21 +89,23 @@ export function Avatar({ avatarRef, animState }: AvatarProps) {
             <meshStandardMaterial color="#222" />
           </mesh>
         </group>
+
         {/* Arms */}
-        <mesh position={[-0.22, 0.36, 0]} rotation={[0, 0, -0.4]} castShadow>
+        <mesh ref={leftArmRef} position={[-0.22, 0.36, 0]} rotation={[0, 0, -0.4]} castShadow>
           <capsuleGeometry args={[0.06, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
-        <mesh position={[0.22, 0.36, 0]} rotation={[0, 0, 0.4]} castShadow>
+        <mesh ref={rightArmRef} position={[0.22, 0.36, 0]} rotation={[0, 0, 0.4]} castShadow>
           <capsuleGeometry args={[0.06, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
+
         {/* Legs */}
-        <mesh position={[-0.09, 0.02, 0]} castShadow>
+        <mesh ref={leftLegRef} position={[-0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>
-        <mesh position={[0.09, 0.02, 0]} castShadow>
+        <mesh ref={rightLegRef} position={[0.09, 0.02, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.2, 4, 6]} />
           <meshStandardMaterial color="#FDFBEC" flatShading />
         </mesh>

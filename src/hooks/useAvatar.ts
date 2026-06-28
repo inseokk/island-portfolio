@@ -1,22 +1,38 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { AVATAR_TARGETS, AnimState, IslandId } from "../data/islands";
 
-/**
- * useAvatar
- * Manages avatar position, animation state, and GSAP-powered movement.
- *
- * Returns:
- *   avatarRef      — attach to the avatar <group> in the scene
- *   animState      — "idle" | "running" | "celebrating"
- *   activeIsland   — which island id the avatar is on (or heading to)
- *   walkTo(id)     — call with an island id to trigger movement
- */
+const MOVEMENT_KEYS = new Set([
+  "w", "a", "s", "d",
+  "arrowup", "arrowdown", "arrowleft", "arrowright",
+]);
+
 export function useAvatar() {
   const avatarRef = useRef<THREE.Group>(null);
   const [animState, setAnimState] = useState<AnimState>("idle");
   const [activeIsland, setActiveIsland] = useState<IslandId>("home");
+  const keysRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      if (!MOVEMENT_KEYS.has(key)) return;
+      e.preventDefault();
+      keysRef.current.add(key);
+    };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      keysRef.current.delete(e.key.toLowerCase());
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, []);
 
   const walkTo = useCallback(
     (islandId: IslandId, onComplete?: () => void) => {
@@ -54,5 +70,5 @@ export function useAvatar() {
     [activeIsland]
   );
 
-  return { avatarRef, animState, activeIsland, walkTo };
+  return { avatarRef, animState, setAnimState, activeIsland, walkTo, keysRef };
 }
